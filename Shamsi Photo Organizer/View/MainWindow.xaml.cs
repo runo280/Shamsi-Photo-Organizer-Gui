@@ -122,10 +122,9 @@ namespace Shamsi_Photo_Organizer.View
             //TODO about dialog
         }
 
-
         private void RbOnChecked(object sender, RoutedEventArgs e)
         {
-            switch (((RadioButton) sender).Name)
+            switch (((RadioButton)sender).Name)
             {
                 case "RbYear":
                     _method = OrganizeMethod.ByYear;

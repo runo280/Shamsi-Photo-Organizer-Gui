@@ -18,7 +18,7 @@ namespace Shamsi_Photo_Organizer.Utils
             if (dateFmt == null)
             {
                 var dateInfo = System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat;
-                dateFmt=dateInfo.GetAllDateTimePatterns();
+                dateFmt = dateInfo.GetAllDateTimePatterns();
             }
             // Commented out below because it can be done shorter as shown below.
             // For older C# versions (older than C#7) you need it like that:
@@ -31,10 +31,10 @@ namespace Shamsi_Photo_Organizer.Utils
                 style, out var dt) ? dt : null as DateTime?;
             return result;
         }
-        
+
         public static bool inRange(this DateTime dateToCheck)
         {
-            return dateToCheck < new DateTime(9999,12,31) && dateToCheck > new DateTime(622,3,22);
+            return dateToCheck < new DateTime(9999, 12, 31) && dateToCheck > new DateTime(622, 3, 22);
         }
     }
 }
