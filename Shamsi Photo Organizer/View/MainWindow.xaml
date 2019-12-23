@@ -13,7 +13,7 @@
 
             <StackPanel>
                 <Label VerticalContentAlignment="Center" Margin="0,0,0,8"
-                       Content="مسیری که عکس های شما در آن قرار دارد را انتخاب کنید:" FontWeight="Bold" />
+                       Content="مسیری که عکس‌های شما در آن قرار دارد را انتخاب کنید:" FontWeight="Bold" />
                 <Grid VerticalAlignment="Center" Height="24">
 
                     <Grid.ColumnDefinitions>
@@ -27,7 +27,7 @@
                 <Separator Margin="10" Background="#d5dfe5" />
 
                 <Label VerticalContentAlignment="Center" Margin="0,8"
-                       Content="در صورتی که میخواهید عکس ها به جایی دیگر منتقل شوند، در این قسمت آن را انتخاب کنید:"
+                       Content="در صورتی که می‌خواهید عکس‌ها به جایی دیگر منتقل شود، در این قسمت آن را انتخاب کنید:"
                        FontWeight="Bold" />
                 <Grid VerticalAlignment="Center" Height="24">
 
@@ -49,7 +49,7 @@
         <GroupBox Header="تنظیمات" Padding="10" Background="#F5F5F5" Margin="0,10,0,0">
 
             <StackPanel>
-                <Label Margin="0,0,0,8" Content="سازماندهی عکس ها بر اساس:" FontWeight="Bold" />
+                <Label Margin="0,0,0,8" Content="سازماندهی عکس‌ها بر اساس:" FontWeight="Bold" />
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -57,19 +57,19 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <RadioButton x:Name="RbYear" Checked="RbOnChecked" Grid.Row="0"
-                                 Content="سال: عکس ها بر اساس سال در پوشه هایی قرار می گیرند" IsChecked="True" />
+                                 Content="سال: عکس‌ها بر اساس سال در پوشه‌هایی قرار می‌گیرد" IsChecked="True" />
                     <RadioButton x:Name="RbMonthInYear" Checked="RbOnChecked" Grid.Row="1" Content="سال/ماه" />
                     <RadioButton x:Name="RbYearMonth" Checked="RbOnChecked" Grid.Row="2" Content="سال-ماه" />
                 </Grid>
                 <Separator Margin="14" Background="#d5dfe5" />
 
-                <CheckBox x:Name="CheckBoxCopy" IsEnabled="False" Content="کپی کردن عکس ها" FontWeight="Bold" />
+                <CheckBox x:Name="CheckBoxCopy" IsEnabled="False" Content="کپی کردن عکس‌ها" FontWeight="Bold" />
                 <Label
-                    Content="عکس ها بجای انتقال به مقصد تعیین شده، کپی می شوند." />
+                    Content="عکس‌ها بجای انتقال به مقصد تعیین شده، کپی می‌شود." />
                 <CheckBox x:Name="CheckBoxRename" Checked="CheckBoxRename_OnChecked"
                           Unchecked="CheckBoxRename_OnUnchecked" Content="تغییر نام فایلها" FontWeight="Bold" />
                 <Label
-                    Content="با انتخاب این گزینه فایلها علاوه بر سازماندهی با فرمت پیشوند-تاریخ-زمان تغییر نام می یابند، برای مثال:" />
+                    Content="با انتخاب این گزینه فایل‌ها علاوه بر سازماندهی با قالب پیشوند-تاریخ-زمان تغییر نام می‌یابد، برای نمونه:" />
                 <Label x:Name="LblNamePreview" FlowDirection="LeftToRight" Content="Photo-1398-02-25__13-25-30.jpg" />
 
                 <Grid VerticalAlignment="Center" Height="30">
@@ -78,7 +78,7 @@
                         <ColumnDefinition Width="40*" />
                         <ColumnDefinition Width="60*" />
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="پیشوند برای تغییر نام فایلها (ترجیحا به انگلیسی):" />
+                    <Label Grid.Column="0" Content="پیشوند برای تغییر نام فایل‌ها (ترجیحاً به انگلیسی):" />
                     <TextBox x:Name="LblPrefix" TextChanged="LblPrefix_OnTextChanged" InputMethod.InputScope=""
                              IsEnabled="False" Text="Photo" VerticalContentAlignment="Center"
                              FlowDirection="LeftToRight" Grid.Column="1" Margin="8,0,0,0" />
@@ -96,7 +96,7 @@
             <Button x:Name="BtnStart" Click="BtnStart_OnClick" Grid.Column="0" FontSize="18" Content="🚀 شروع"
                     FontWeight="Bold" />
             <Button x:Name="BtnHelp" Click="BtnHelp_OnClick" Grid.Column="2" Margin="6" Content="ℹ️ راهنما" />
-            <Button x:Name="BtnAbout" Click="BtnAbout_OnClick" Grid.Column="3" Margin="6" Content="😎 درباره برنامه" />
+            <Button x:Name="BtnAbout" Click="BtnAbout_OnClick" Grid.Column="3" Margin="6" Content="😎 دربارهٔ برنامه" />
         </Grid>
     </StackPanel>
 </Window>
