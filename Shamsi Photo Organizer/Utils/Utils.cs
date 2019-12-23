@@ -14,42 +14,29 @@ namespace Shamsi_Photo_Organizer.Utils
     {
         private static readonly string[] DateTimeFormats = { "yyyy:MM:dd HH:mm:ss" };
 
-        private static List<string> getPhotosList(string dir)
-        {
-            var ext = new[] { ".jpg", ".jpeg" };
-            return Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories)
-                .Where(file => ext.Contains(Path.GetExtension(file)?.ToLowerInvariant())).ToList();
-        }
+        private static String[] supportedExtensions = new[] { ".jpg", ".jpeg" };
 
-        public static List<Photo> getPhotos(string dir)
-        {
-            var photos = new List<Photo>();
-            foreach (var file in getPhotosList(dir))
-            {
-                processPhoto(file, out var ph);
-                photos.Add(ph);
-            }
+        private static List<string> getPhotosList(string dir) =>
+            Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories)
+                .Where(file => supportedExtensions.Contains(Path.GetExtension(file)?.ToLowerInvariant()))
+                .ToList();
 
-            return photos;
-        }
-
-        private static void processPhoto(string file, out Photo photo)
+        public static List<Photo> getPhotos(string dir) => getPhotosList(dir).Select(file =>
         {
-            photo = new Photo(file);
+            var photo = new Photo(file);
             var dateTimeString = extractDateTimeFromMetadata(file);
             var result = dateTimeString.ToDate(DateTimeFormats);
-            if (!result.HasValue) return;
+            if (!result.HasValue) return photo;
             // dateToFile(result.Value, file);
-            if (!result.Value.inRange()) return;
+            if (!result.Value.inRange()) return photo;
             photo.DateTimeString = dateTimeString;
             photo.DateTime = result.Value;
             photo.Renamable = true;
-        }
+            return photo;
+        }).ToList();
 
-        public static int getValidPhotosCount(List<Photo> photos)
-        {
-            return photos.FindAll(photo => photo.Renamable).Count;
-        }
+        public static int getValidPhotosCount(List<Photo> photos) =>
+            photos.FindAll(photo => photo.Renamable).Count;
 
         private static string extractDateTimeFromMetadata(string file)
         {
@@ -82,7 +69,6 @@ namespace Shamsi_Photo_Organizer.Utils
             return false;
         }
 
-
         // for debug purpose
         private static void metaDataToFile(IEnumerable<MetadataExtractor.Directory> directories, String file)
         {
@@ -91,11 +77,8 @@ namespace Shamsi_Photo_Organizer.Utils
             {
                 if (directory == null) continue;
                 sb.AppendLine($"---> {directory.Name}");
-                foreach (var tag in directory.Tags)
-                {
-                    if (tag == null) continue;
-                    sb.AppendLine($"{tag.Name}: {tag.Description}");
-                }
+                directory.Tags.Where(tag => tag != null).Select(tag => $"{tag.Name}: {tag.Description}")
+                    .ToList().ForEach(line => sb.AppendLine(line));
             }
 
             File.AppendAllText(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\log.txt",
@@ -113,15 +96,11 @@ namespace Shamsi_Photo_Organizer.Utils
                 sb.ToString());
         }
 
-        public static void organizeFile(string dir, string newOutPath, string prefix, bool rename, bool copy,
-            OrganizeMethod method)
+        public static void organizeFile(string dir, string newOutPath, string prefix, bool rename,
+            bool copy, OrganizeMethod method)
         {
-            foreach (var photo in getPhotos(dir))
-            {
-                _organizeFile(photo, newOutPath, prefix, rename, copy, method);
-            }
+            getPhotos(dir).ForEach(photo => _organizeFile(photo, newOutPath, prefix, rename, copy, method));
         }
-
 
         private static void _organizeFile(Photo photo, string newOutPath, string prefix, bool rename, bool copy,
             OrganizeMethod method)
@@ -143,13 +122,10 @@ namespace Shamsi_Photo_Organizer.Utils
             }
 
             newOutPath += Path.DirectorySeparatorChar + newPath + Path.DirectorySeparatorChar;
-            if (!Directory.Exists(newOutPath))
-                Directory.CreateDirectory(newOutPath);
 
-            if (rename)
-                newOutPath += photo.getShamsiName(prefix);
-            else
-                newOutPath += photo.FileName;
+            if (!Directory.Exists(newOutPath)) Directory.CreateDirectory(newOutPath);
+
+            newOutPath += rename ? photo.getShamsiName(prefix) : photo.FileName;
 
             try
             {

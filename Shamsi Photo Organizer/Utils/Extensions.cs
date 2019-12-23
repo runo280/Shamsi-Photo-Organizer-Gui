@@ -32,9 +32,7 @@ namespace Shamsi_Photo_Organizer.Utils
             return result;
         }
 
-        public static bool inRange(this DateTime dateToCheck)
-        {
-            return dateToCheck < new DateTime(9999, 12, 31) && dateToCheck > new DateTime(622, 3, 22);
-        }
+        public static bool inRange(this DateTime dateToCheck) =>
+            dateToCheck < new DateTime(9999, 12, 31) && dateToCheck > new DateTime(622, 3, 22);
     }
 }
