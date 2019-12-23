@@ -104,10 +104,10 @@ namespace Shamsi_Photo_Organizer.View
         {
             if (_inputDir == null) return;
             if (_rename && LblPrefix.Text.Trim().Length == 0) return;
-            var list = Utils.Utils.getPhotos(_inputDir);
-            var count = Utils.Utils.getValidPhotosCount(list);
+            var list = Utils.Utils.GetPhotos(_inputDir);
+            var count = Utils.Utils.GetValidPhotosCount(list);
             MessageBox.Show($"Photos count: {list.Count}");
-            Utils.Utils.organizeFile(_inputDir, _outputDir, _rename ? LblPrefix.Text : "Photo", _rename,
+            Utils.Utils.OrganizeFile(_inputDir, _outputDir, _rename ? LblPrefix.Text : "Photo", _rename,
                 CheckBoxCopy.IsEnabled,
                 _method);
         }

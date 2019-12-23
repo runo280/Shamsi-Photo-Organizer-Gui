@@ -25,17 +25,17 @@ namespace Shamsi_Photo_Organizer.Model
 
         private readonly PersianCalendar _persianCalendar = new PersianCalendar();
 
-        public string getYear() => _persianCalendar.GetYear(DateTime).ToString();
+        public string GetYear() => _persianCalendar.GetYear(DateTime).ToString();
 
-        public string getMonth() => _persianCalendar.GetMonth(DateTime).ToString();
+        public string GetMonth() => _persianCalendar.GetMonth(DateTime).ToString();
 
-        public string getShamsiName(string prefix)
+        public string GetShamsiName(string prefix)
         {
             string day = _persianCalendar.GetDayOfMonth(DateTime).ToString();
             string hour = _persianCalendar.GetHour(DateTime).ToString();
             string minute = _persianCalendar.GetMinute(DateTime).ToString();
             string second = _persianCalendar.GetSecond(DateTime).ToString();
-            return $"{prefix}_{getYear()}-{getMonth()}-{day}_{hour}-{minute}-{second}{Extension}";
+            return $"{prefix}_{GetYear()}-{GetMonth()}-{day}_{hour}-{minute}-{second}{Extension}";
         }
     }
 }

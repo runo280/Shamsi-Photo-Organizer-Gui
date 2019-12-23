@@ -16,34 +16,34 @@ namespace Shamsi_Photo_Organizer.Utils
 
         private static String[] supportedExtensions = new[] { ".jpg", ".jpeg" };
 
-        private static List<string> getPhotosList(string dir) =>
+        private static List<string> GetPhotosList(string dir) =>
             Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories)
                 .Where(file => supportedExtensions.Contains(Path.GetExtension(file)?.ToLowerInvariant()))
                 .ToList();
 
-        public static List<Photo> getPhotos(string dir) => getPhotosList(dir).Select(file =>
+        public static List<Photo> GetPhotos(string dir) => GetPhotosList(dir).Select(file =>
         {
             var photo = new Photo(file);
-            var dateTimeString = extractDateTimeFromMetadata(file);
+            var dateTimeString = ExtractDateTimeFromMetadata(file);
             var result = dateTimeString.ToDate(DateTimeFormats);
             if (!result.HasValue) return photo;
             // dateToFile(result.Value, file);
-            if (!result.Value.inRange()) return photo;
+            if (!result.Value.InRange()) return photo;
             photo.DateTimeString = dateTimeString;
             photo.DateTime = result.Value;
             photo.Renamable = true;
             return photo;
         }).ToList();
 
-        public static int getValidPhotosCount(List<Photo> photos) =>
+        public static int GetValidPhotosCount(List<Photo> photos) =>
             photos.FindAll(photo => photo.Renamable).Count;
 
-        private static string extractDateTimeFromMetadata(string file)
+        private static string ExtractDateTimeFromMetadata(string file)
         {
             try
             {
                 IEnumerable<MetadataExtractor.Directory> directories = ImageMetadataReader.ReadMetadata(file);
-                return findDateTimeFromDirectories(directories, out var dateTime) ? dateTime.Trim() : null;
+                return FindDateTimeFromDirectories(directories, out var dateTime) ? dateTime.Trim() : null;
             }
             catch (Exception e)
             {
@@ -51,7 +51,7 @@ namespace Shamsi_Photo_Organizer.Utils
             }
         }
 
-        private static bool findDateTimeFromDirectories(IEnumerable<MetadataExtractor.Directory> directories,
+        private static bool FindDateTimeFromDirectories(IEnumerable<MetadataExtractor.Directory> directories,
             out string dateTime)
         {
             foreach (var directory in directories)
@@ -70,7 +70,7 @@ namespace Shamsi_Photo_Organizer.Utils
         }
 
         // for debug purpose
-        private static void metaDataToFile(IEnumerable<MetadataExtractor.Directory> directories, String file)
+        private static void MetaDataToFile(IEnumerable<MetadataExtractor.Directory> directories, String file)
         {
             var sb = new StringBuilder("\n\n======> " + file);
             foreach (var directory in directories)
@@ -86,7 +86,7 @@ namespace Shamsi_Photo_Organizer.Utils
         }
 
         // for debug purpose
-        private static void dateToFile(DateTime dateTime, string file)
+        private static void DateToFile(DateTime dateTime, string file)
         {
             var sb = new StringBuilder("\n\n======> " + file);
             sb.AppendLine();
@@ -96,10 +96,10 @@ namespace Shamsi_Photo_Organizer.Utils
                 sb.ToString());
         }
 
-        public static void organizeFile(string dir, string newOutPath, string prefix, bool rename,
+        public static void OrganizeFile(string dir, string newOutPath, string prefix, bool rename,
             bool copy, OrganizeMethod method)
         {
-            getPhotos(dir).ForEach(photo => _organizeFile(photo, newOutPath, prefix, rename, copy, method));
+            GetPhotos(dir).ForEach(photo => _organizeFile(photo, newOutPath, prefix, rename, copy, method));
         }
 
         private static void _organizeFile(Photo photo, string newOutPath, string prefix, bool rename, bool copy,
@@ -111,13 +111,13 @@ namespace Shamsi_Photo_Organizer.Utils
             switch (method)
             {
                 case OrganizeMethod.ByYear:
-                    newPath = $"{photo.getYear()}";
+                    newPath = $"{photo.GetYear()}";
                     break;
                 case OrganizeMethod.ByYearMonth:
-                    newPath = $"{photo.getYear()}-{photo.getMonth()}";
+                    newPath = $"{photo.GetYear()}-{photo.GetMonth()}";
                     break;
                 case OrganizeMethod.ByMonthInYear:
-                    newPath = $"{photo.getYear()}{Path.DirectorySeparatorChar}{photo.getMonth()}";
+                    newPath = $"{photo.GetYear()}{Path.DirectorySeparatorChar}{photo.GetMonth()}";
                     break;
             }
 
@@ -125,7 +125,7 @@ namespace Shamsi_Photo_Organizer.Utils
 
             if (!Directory.Exists(newOutPath)) Directory.CreateDirectory(newOutPath);
 
-            newOutPath += rename ? photo.getShamsiName(prefix) : photo.FileName;
+            newOutPath += rename ? photo.GetShamsiName(prefix) : photo.FileName;
 
             try
             {
@@ -140,11 +140,11 @@ namespace Shamsi_Photo_Organizer.Utils
         }
 
         //TODO add option to delete empty dirs
-        public static void processDirectory(string startLocation)
+        public static void ProcessDirectory(string startLocation)
         {
             foreach (var directory in Directory.GetDirectories(startLocation))
             {
-                processDirectory(directory);
+                ProcessDirectory(directory);
                 if (Directory.GetFiles(directory).Length == 0 &&
                     Directory.GetDirectories(directory).Length == 0)
                 {
