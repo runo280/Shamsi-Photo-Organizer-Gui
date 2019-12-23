@@ -6,7 +6,7 @@ namespace Shamsi_Photo_Organizer.Model
 {
     class Photo
     {
-        public string FilePath{ get; }
+        public string FilePath { get; }
         public string FileName { get; }
         private string Extension { get; }
 

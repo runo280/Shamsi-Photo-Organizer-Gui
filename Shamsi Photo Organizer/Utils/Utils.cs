@@ -12,11 +12,11 @@ namespace Shamsi_Photo_Organizer.Utils
 {
     class Utils
     {
-        private static readonly string[] DateTimeFormats = {"yyyy:MM:dd HH:mm:ss"};
+        private static readonly string[] DateTimeFormats = { "yyyy:MM:dd HH:mm:ss" };
 
         private static List<string> getPhotosList(string dir)
         {
-            var ext = new[] {".jpg", ".jpeg"};
+            var ext = new[] { ".jpg", ".jpeg" };
             return Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories)
                 .Where(file => ext.Contains(Path.GetExtension(file)?.ToLowerInvariant())).ToList();
         }
@@ -82,7 +82,7 @@ namespace Shamsi_Photo_Organizer.Utils
             return false;
         }
 
-        
+
         // for debug purpose
         private static void metaDataToFile(IEnumerable<MetadataExtractor.Directory> directories, String file)
         {
