@@ -4,16 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:properties="clr -namespace:Shamsi_Photo_Organizer.Properties"
+        FontFamily="{StaticResource Vazir}"
         mc:Ignorable="d"
         ResizeMode="CanMinimize"
         FlowDirection="RightToLeft"
-        Title="Shamsi Photo Organizer" Height="610" Width="800" WindowStartupLocation="CenterScreen">
+        Title="Shamsi Photo Organizer" Height="650" Width="800" WindowStartupLocation="CenterScreen">
     <StackPanel Margin="10">
         <GroupBox Header="انتخاب مسیر" Background="#F5F5F5" Padding="10">
 
             <StackPanel>
                 <Label VerticalContentAlignment="Center" Margin="0,0,0,8"
-                       Content="مسیری که عکس‌های شما در آن قرار دارد را انتخاب کنید:" FontWeight="Bold" />
+                       Content="مسیری که عکس‌های شما در آن قرار دارد را انتخاب کنید:"/>
                 <Grid VerticalAlignment="Center" Height="24">
 
                     <Grid.ColumnDefinitions>
@@ -27,8 +28,7 @@
                 <Separator Margin="10" Background="#d5dfe5" />
 
                 <Label VerticalContentAlignment="Center" Margin="0,8"
-                       Content="در صورتی که می‌خواهید عکس‌ها به جایی دیگر منتقل شود، در این قسمت آن را انتخاب کنید:"
-                       FontWeight="Bold" />
+                       Content="در صورتی که می‌خواهید عکس‌ها به جایی دیگر منتقل شود، در این قسمت آن را انتخاب کنید:"/>
                 <Grid VerticalAlignment="Center" Height="24">
 
                     <Grid.ColumnDefinitions>
@@ -49,7 +49,7 @@
         <GroupBox Header="تنظیمات" Padding="10" Background="#F5F5F5" Margin="0,10,0,0">
 
             <StackPanel>
-                <Label Margin="0,0,0,8" Content="سازماندهی عکس‌ها بر اساس:" FontWeight="Bold" />
+                <Label Margin="0,0,0,8" Content="سازماندهی عکس‌ها بر اساس:"/>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -63,11 +63,11 @@
                 </Grid>
                 <Separator Margin="14" Background="#d5dfe5" />
 
-                <CheckBox x:Name="CheckBoxCopy" IsEnabled="False" Content="کپی کردن عکس‌ها" FontWeight="Bold" />
+                <CheckBox x:Name="CheckBoxCopy" IsEnabled="False" Content="کپی کردن عکس‌ها"/>
                 <Label
                     Content="عکس‌ها بجای انتقال به مقصد تعیین شده، کپی می‌شود." />
                 <CheckBox x:Name="CheckBoxRename" Checked="CheckBoxRename_OnChecked"
-                          Unchecked="CheckBoxRename_OnUnchecked" Content="تغییر نام فایلها" FontWeight="Bold" />
+                          Unchecked="CheckBoxRename_OnUnchecked" Content="تغییر نام فایلها"/>
                 <Label
                     Content="با انتخاب این گزینه فایل‌ها علاوه بر سازماندهی با قالب پیشوند-تاریخ-زمان تغییر نام می‌یابد، برای نمونه:" />
                 <Label x:Name="LblNamePreview" FlowDirection="LeftToRight" Content="Photo-1398-02-25__13-25-30.jpg" />
@@ -93,8 +93,7 @@
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
-            <Button x:Name="BtnStart" Click="BtnStart_OnClick" Grid.Column="0" FontSize="18" Content="🚀 شروع"
-                    FontWeight="Bold" />
+            <Button x:Name="BtnStart" Click="BtnStart_OnClick" Grid.Column="0" FontSize="18" Content="🚀 شروع"/>
             <Button x:Name="BtnHelp" Click="BtnHelp_OnClick" Grid.Column="2" Margin="6" Content="ℹ️ راهنما" />
             <Button x:Name="BtnAbout" Click="BtnAbout_OnClick" Grid.Column="3" Margin="6" Content="😎 دربارهٔ برنامه" />
         </Grid>

@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:Shamsi_Photo_Organizer"
              StartupUri="View/MainWindow.xaml">
     <Application.Resources>
-
+        <FontFamily x:Key="Vazir">pack://application:,,,/Resources/Fonts/#Vazir Light</FontFamily>
     </Application.Resources>
 </Application>
