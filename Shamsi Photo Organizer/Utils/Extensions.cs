@@ -10,9 +10,9 @@ namespace Shamsi_Photo_Organizer.Utils
         // or one or more patterns passed as string parameters
         public static DateTime? ToDate(this string dateTimeStr, params string[] dateFmt)
         {
-            // example: var dt = "2011-03-21 13:26".ToDate(new string[]{"yyyy-MM-dd HH:mm", 
+            // example: var dt = "2011-03-21 13:26".ToDate(new string[]{"yyyy-MM-dd HH:mm",
             //                                                  "M/d/yyyy h:mm:ss tt"});
-            // or simpler: 
+            // or simpler:
             // var dt = "2011-03-21 13:26".ToDate("yyyy-MM-dd HH:mm", "M/d/yyyy h:mm:ss tt");
             const DateTimeStyles style = DateTimeStyles.AllowWhiteSpaces;
             if (dateFmt == null)

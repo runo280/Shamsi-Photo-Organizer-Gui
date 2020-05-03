@@ -1,9 +1,17 @@
 ﻿<Application x:Class="Shamsi_Photo_Organizer.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Shamsi_Photo_Organizer"
-             StartupUri="View/MainWindow.xaml">
+             StartupUri="View/StartPage.xaml">
     <Application.Resources>
-        <FontFamily x:Key="Vazir">pack://application:,,,/Resources/Fonts/#Vazir Light</FontFamily>
+        <ResourceDictionary>
+            <FontFamily x:Key="Vazir">pack://application:,,,/Resources/Fonts/#Vazir Light</FontFamily>
+            <ImageSource x:Key="ExitIcon">pack://application:,,,/Resources/Images/exit.png</ImageSource>
+            <ImageSource x:Key="MinimizeIcon">pack://application:,,,/Resources/Images/minimize.png</ImageSource>
+            <Image x:Key="ExitIcon2" Source="pack://application:,,,/Resources/Images/exit.png" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
