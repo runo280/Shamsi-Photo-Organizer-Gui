@@ -36,14 +36,23 @@ namespace Shamsi_Photo_Organizer.Model
 
         public string GetYear() => _persianCalendar.GetYear(DateTime).ToString();
 
-        public string GetMonth() => _persianCalendar.GetMonth(DateTime).ToString();
+        public string GetMonth() => AddZero(_persianCalendar.GetMonth(DateTime).ToString());
+
+        public string GetDay() => AddZero(_persianCalendar.GetDayOfMonth(DateTime).ToString());
+        
+
+        private static string AddZero(string num)
+        {
+            if (num.Length == 1) num = $"0{num}";
+            return num;
+        }
 
         private string GetShamsiName(string prefix)
         {
-            string day = _persianCalendar.GetDayOfMonth(DateTime).ToString();
-            string hour = _persianCalendar.GetHour(DateTime).ToString();
-            string minute = _persianCalendar.GetMinute(DateTime).ToString();
-            string second = _persianCalendar.GetSecond(DateTime).ToString();
+            string day = GetDay();
+            string hour = AddZero(_persianCalendar.GetHour(DateTime).ToString());
+            string minute = AddZero(_persianCalendar.GetMinute(DateTime).ToString());
+            string second = AddZero(_persianCalendar.GetSecond(DateTime).ToString());
             return $"{prefix}_{GetYear()}-{GetMonth()}-{day}_{hour}-{minute}-{second}{Extension}";
         }
     }
