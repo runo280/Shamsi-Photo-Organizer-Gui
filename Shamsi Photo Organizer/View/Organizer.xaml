@@ -37,6 +37,6 @@
             <RadioButton HorizontalAlignment="Left" Margin="0,8,0,0" x:Name="RbYearMonth" Checked="RbOnChecked" Grid.Row="2" Content="سال-ماه" />
         </Grid>
 
-        <Button x:Name="BtnStart" Margin="0,32,0,8" Height="Auto" Click="BtnStart_OnClick" Grid.Column="0" FontSize="20" Content="🚀 شروع" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <Button x:Name="BtnStart" Margin="0,32,0,8" Height="Auto" Click="BtnStart_OnClick" FontSize="20" Content="🚀 شروع" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="8"/>
     </StackPanel>
 </Window>
