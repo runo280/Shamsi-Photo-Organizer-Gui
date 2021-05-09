@@ -39,7 +39,7 @@ namespace Shamsi_Photo_Organizer.Model
         public string GetMonth() => AddZero(_persianCalendar.GetMonth(DateTime).ToString());
 
         public string GetDay() => AddZero(_persianCalendar.GetDayOfMonth(DateTime).ToString());
-        
+
 
         private static string AddZero(string num)
         {

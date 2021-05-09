@@ -15,7 +15,7 @@ namespace Shamsi_Photo_Organizer.Utils
     {
         private static readonly string[] DateTimeFormats = {"yyyy:MM:dd HH:mm:ss"};
 
-        private static readonly String[] SupportedExtensions = {".jpg", ".jpeg"};
+        private static readonly String[] SupportedExtensions = {".jpg", ".jpeg", ".mp4"};
 
         private static List<string> GetAllPhotosListAsString(string dir) =>
             Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories)
@@ -48,8 +48,9 @@ namespace Shamsi_Photo_Organizer.Utils
                 IEnumerable<MetadataExtractor.Directory> directories = ImageMetadataReader.ReadMetadata(file);
                 return FindDateTimeFromDirectories(directories, out var dateTime) ? dateTime.Trim() : null;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Debug.WriteLine($"error: {e.Message}");
                 return null;
             }
         }
@@ -62,6 +63,7 @@ namespace Shamsi_Photo_Organizer.Utils
                 if (directory == null) continue;
                 foreach (var tag in directory.Tags)
                 {
+                    Debug.WriteLine($"error: {tag.Name + " ::> " + tag.Description}");
                     if ((!tag.Name.ToLower().StartsWith("date/time"))) continue;
                     dateTime = tag.Description;
                     return true;
@@ -119,6 +121,7 @@ namespace Shamsi_Photo_Organizer.Utils
             try
             {
                 File.Move(photo.FullPath, newPath);
+                Debug.WriteLine($"error: {newPath}");
             }
             catch (Exception e)
             {
@@ -126,7 +129,6 @@ namespace Shamsi_Photo_Organizer.Utils
                 Debug.WriteLine($"error: {e.Message}");
             }
         }
-
 
         public static void OrganizePhotos(List<Photo> photos, OrganizeMethod method)
         {
@@ -163,7 +165,8 @@ namespace Shamsi_Photo_Organizer.Utils
             newPath += photo.FileName;
             try
             {
-                File.Move(photo.FullPath, newPath);
+                //File.Move(photo.FullPath, newPath);
+                Debug.WriteLine($"error: {newPath}");
             }
             catch (Exception e)
             {

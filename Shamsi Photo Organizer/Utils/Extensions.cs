@@ -20,6 +20,7 @@ namespace Shamsi_Photo_Organizer.Utils
                 var dateInfo = System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat;
                 dateFmt = dateInfo.GetAllDateTimePatterns();
             }
+
             // Commented out below because it can be done shorter as shown below.
             // For older C# versions (older than C#7) you need it like that:
             // DateTime? result = null;
@@ -28,7 +29,9 @@ namespace Shamsi_Photo_Organizer.Utils
             //    CultureInfo.InvariantCulture, style, out dt)) result = dt;
             // In C#7 and above, we can simply write:
             var result = DateTime.TryParseExact(dateTimeStr, dateFmt, CultureInfo.InvariantCulture,
-                style, out var dt) ? dt : null as DateTime?;
+                style, out var dt)
+                ? dt
+                : null as DateTime?;
             return result;
         }
 

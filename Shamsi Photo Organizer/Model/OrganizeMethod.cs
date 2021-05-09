@@ -2,6 +2,8 @@
 {
     public enum OrganizeMethod
     {
-        ByYear, ByMonthInYear, ByYearMonth
+        ByYear,
+        ByMonthInYear,
+        ByYearMonth
     }
 }

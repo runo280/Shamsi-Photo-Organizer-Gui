@@ -8,7 +8,7 @@
             <ImageSource x:Key="ExitIcon">pack://application:,,,/Resources/Images/exit.png</ImageSource>
             <ImageSource x:Key="MinimizeIcon">pack://application:,,,/Resources/Images/minimize.png</ImageSource>
             <Image x:Key="ExitIcon2" Source="pack://application:,,,/Resources/Images/exit.png" />
-            
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

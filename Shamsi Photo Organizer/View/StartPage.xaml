@@ -13,7 +13,9 @@
         Title="Shamsi Photo Organizer">
 
     <StackPanel Margin="32">
-        <Button Click="renamer_onclcik" Height="50" Width="200" Content="تغییر نام عکس ها" Margin="0,0,0,8" FontWeight="Bold" FontSize="14" />
-        <Button Click="organizer_onclcik" Height="50" Width="200" Content="سازماندهی عکس ها" Margin="0,0,0,8" FontWeight="Bold" FontSize="14" />
+        <Button Click="renamer_onclcik" Height="50" Width="200" Content="تغییر نام عکس ها" Margin="0,0,0,8"
+                FontWeight="Bold" FontSize="14" />
+        <Button Click="organizer_onclcik" Height="50" Width="200" Content="سازماندهی عکس ها" Margin="0,0,0,8"
+                FontWeight="Bold" FontSize="14" />
     </StackPanel>
 </Window>
