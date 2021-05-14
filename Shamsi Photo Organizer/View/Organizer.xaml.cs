@@ -2,8 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using Shamsi_Photo_Organizer.Model;
+using Shamsi_Photo_Organizer.Utils;
 using WK.Libraries.BetterFolderBrowserNS;
-using static Shamsi_Photo_Organizer.Utils.Utils;
 
 namespace Shamsi_Photo_Organizer.View
 {
@@ -47,14 +47,14 @@ namespace Shamsi_Photo_Organizer.View
         private void BtnStart_OnClick(object sender, RoutedEventArgs e)
         {
             if (_inputDir == null) return;
-            var allPhotosList = GetPhotosList(_inputDir);
-            var countOfValidPhotos = CountOfValidMedia(allPhotosList);
+            var allPhotosList = PhotoUtils.GetPhotosList(_inputDir);
+            var countOfValidPhotos = PhotoUtils.CountOfValidMedia(allPhotosList);
             var message =
                 $"تعداد کل عکسها: {allPhotosList.Count}\n\nتعداد عکس های قابل سازماندهی: {countOfValidPhotos}";
             MessageBoxResult messageBoxResult = MessageBox.Show(message, "شروع سازماندهی", MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
-                OrganizePhotos(allPhotosList, _method);
+                PhotoUtils.OrganizePhotos(allPhotosList, _method);
             }
         }
 

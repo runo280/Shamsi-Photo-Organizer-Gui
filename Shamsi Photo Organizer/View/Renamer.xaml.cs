@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using Shamsi_Photo_Organizer.Utils;
 using WK.Libraries.BetterFolderBrowserNS;
-using static Shamsi_Photo_Organizer.Utils.Utils;
 
 namespace Shamsi_Photo_Organizer.View
 {
@@ -51,13 +51,14 @@ namespace Shamsi_Photo_Organizer.View
         private void BtnStart_OnClick(object sender, RoutedEventArgs e)
         {
             if (_inputDir == null) return;
-            var allPhotosList = GetPhotosList(_inputDir);
-            var countOfValidPhotos = CountOfValidMedia(allPhotosList);
-            var message = $"تعداد کل عکسها: {allPhotosList.Count}\n\nتعداد عکس های قابل تغییر نام: {countOfValidPhotos}";
+            var allPhotosList = PhotoUtils.GetPhotosList(_inputDir);
+            var countOfValidPhotos = PhotoUtils.CountOfValidMedia(allPhotosList);
+            var message =
+                $"تعداد کل عکسها: {allPhotosList.Count}\n\nتعداد عکس های قابل تغییر نام: {countOfValidPhotos}";
             var messageBoxResult = MessageBox.Show(message, "شروع تغییر نام", MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
-                RenamePhotos(allPhotosList, _prefix);
+                PhotoUtils.RenamePhotos(allPhotosList, _prefix);
             }
         }
     }

@@ -39,27 +39,5 @@ namespace Shamsi_Photo_Organizer.Utils
 
         public static bool InRange(this DateTime dateToCheck) =>
             dateToCheck < new DateTime(9999, 12, 31) && dateToCheck > new DateTime(622, 3, 22);
-
-        static void PrintDirectories(IEnumerable<Directory> directories, string method)
-        {
-            Console.WriteLine();
-            Console.WriteLine("-------------------------------------------------");
-            Console.Write(' ');
-            Console.WriteLine(method);
-            Console.WriteLine("-------------------------------------------------");
-            Console.WriteLine();
-
-            // Extraction gives us potentially many directories
-            foreach (var directory in directories)
-            {
-                // Each directory stores values in tags
-                foreach (var tag in directory.Tags)
-                    Console.WriteLine(tag);
-
-                // Each directory may also contain error messages
-                foreach (var error in directory.Errors)
-                    Console.Error.WriteLine("ERROR: " + error);
-            }
-        }
     }
 }
