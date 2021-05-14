@@ -11,12 +11,12 @@ namespace Shamsi_Photo_Organizer.View
 
         private void renamer_onclcik(object sender, RoutedEventArgs e)
         {
-            new Renamer().Show();
+            new Renamer {ShowInTaskbar = false, Owner = Application.Current.MainWindow}.ShowDialog();
         }
 
         private void organizer_onclcik(object sender, RoutedEventArgs e)
         {
-            new Organizer().Show();
+            new Organizer {ShowInTaskbar = false, Owner = Application.Current.MainWindow}.ShowDialog();
         }
     }
 }
