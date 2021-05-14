@@ -1,12 +1,13 @@
-﻿using MetadataExtractor;
-using Shamsi_Photo_Organizer.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using MetadataExtractor;
+using MetadataExtractor.Formats.Exif;
+using Shamsi_Photo_Organizer.Model;
 using Directory = System.IO.Directory;
 
 namespace Shamsi_Photo_Organizer.Utils
@@ -15,63 +16,47 @@ namespace Shamsi_Photo_Organizer.Utils
     {
         private static readonly string[] DateTimeFormats = {"yyyy:MM:dd HH:mm:ss"};
 
-        private static readonly String[] SupportedExtensions = {".jpg", ".jpeg", ".mp4"};
+        private static readonly String[] SupportedExtensions = {".jpg", ".jpeg"};
 
-        private static List<string> GetAllPhotosListAsString(string dir) =>
+        private static List<string> GetPhotosListAsString(string dir) =>
             Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories)
                 .Where(file => SupportedExtensions.Contains(Path.GetExtension(file)?.ToLowerInvariant()))
                 .ToList();
 
-        public static List<Photo> GetAllPhotosList(string dir) => GetAllPhotosListAsString(dir).Select(file =>
+        public static List<PhotoItem> GetPhotosList(string dir) => GetPhotosListAsString(dir).Select(file =>
         {
-            var photo = new Photo(file);
+            var photo = new PhotoItem(file);
             var dateTimeString = ExtractDateTimeFromMetadata(file);
             var result = dateTimeString.ToDate(DateTimeFormats);
+            Debug.WriteLine($"GetAllMediaList: {photo.FullPath + "\n" + dateTimeString}");
             if (!result.HasValue) return photo;
             if (!result.Value.InRange()) return photo;
             photo.DateTimeString = dateTimeString;
             photo.DateTime = result.Value;
             photo.Renamable = true;
+            Debug.WriteLine($"GetAllMediaList: {photo.FullPath + "\n" + photo.DateTimeString}");
             return photo;
         }).ToList();
 
-        public static int CountOfValidPhotos(List<Photo> photos) =>
-            photos.FindAll(photo => photo.Renamable).Count;
-
-        public static int CountOfPhotos(List<Photo> photos) =>
-            photos.Count;
+        public static int CountOfValidMedia(List<PhotoItem> photo) =>
+            photo.FindAll(item => item.Renamable).Count;
 
         private static string ExtractDateTimeFromMetadata(string file)
         {
             try
             {
-                IEnumerable<MetadataExtractor.Directory> directories = ImageMetadataReader.ReadMetadata(file);
-                return FindDateTimeFromDirectories(directories, out var dateTime) ? dateTime.Trim() : null;
+                var directories = ImageMetadataReader.ReadMetadata(file);
+                var subIfdDirectory = directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
+                var date = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagDateTimeOriginal) ??
+                           subIfdDirectory?.GetDescription(ExifDirectoryBase.TagDateTimeDigitized) ??
+                           subIfdDirectory?.GetDescription(ExifDirectoryBase.TagDateTime);
+                return date;
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"error: {e.Message}");
+                Console.WriteLine(e);
                 return null;
             }
-        }
-
-        private static bool FindDateTimeFromDirectories(IEnumerable<MetadataExtractor.Directory> directories,
-            out string dateTime)
-        {
-            foreach (var directory in directories)
-            {
-                if (directory == null) continue;
-                foreach (var tag in directory.Tags)
-                {
-                    Debug.WriteLine($"error: {tag.Name + " ::> " + tag.Description}");
-                    if ((!tag.Name.ToLower().StartsWith("date/time"))) continue;
-                    dateTime = tag.Description;
-                    return true;
-                }
-            }
-
-            dateTime = null;
-            return false;
         }
 
         // for debug purpose
@@ -82,7 +67,7 @@ namespace Shamsi_Photo_Organizer.Utils
             {
                 if (directory == null) continue;
                 sb.AppendLine($"---> {directory.Name}");
-                directory.Tags.Where(tag => tag != null).Select(tag => $"{tag.Name}: {tag.Description}")
+                directory.Tags.Select(tag => $"{tag.Name}: {tag.Description}")
                     .ToList().ForEach(line => sb.AppendLine(line));
             }
 
@@ -101,7 +86,7 @@ namespace Shamsi_Photo_Organizer.Utils
                 sb.ToString());
         }
 
-        public static void RenamePhotos(List<Photo> photos, string prefix)
+        public static void RenamePhotos(List<PhotoItem> photos, string prefix)
         {
             foreach (var photo in photos)
             {
@@ -109,19 +94,20 @@ namespace Shamsi_Photo_Organizer.Utils
             }
         }
 
-        private static void Rename(Photo photo, string prefix)
+        private static void Rename(PhotoItem photoItem, string prefix)
         {
-            if (!photo.Renamable) return;
+            if (!photoItem.Renamable) return;
 
-            var newPath = photo.GetNewPath(prefix);
+            var newPath = photoItem.GetNewPath(prefix);
 
-            Debug.WriteLine($"old_path: {photo.FullPath}");
+            Debug.WriteLine($"old_path: {photoItem.FullPath}");
             Debug.WriteLine($"new_path: {newPath}");
+            Debug.WriteLine("");
 
             try
             {
-                File.Move(photo.FullPath, newPath);
-                Debug.WriteLine($"error: {newPath}");
+                // File.Move(mediaItem.FullPath, newPath);
+                Debug.WriteLine($"Rename: {newPath}");
             }
             catch (Exception e)
             {
@@ -130,7 +116,7 @@ namespace Shamsi_Photo_Organizer.Utils
             }
         }
 
-        public static void OrganizePhotos(List<Photo> photos, OrganizeMethod method)
+        public static void OrganizePhotos(List<PhotoItem> photos, OrganizeMethod method)
         {
             foreach (var photo in photos)
             {
@@ -138,23 +124,23 @@ namespace Shamsi_Photo_Organizer.Utils
             }
         }
 
-        private static void Organize(Photo photo, OrganizeMethod method)
+        private static void Organize(PhotoItem photoItem, OrganizeMethod method)
         {
-            if (!photo.Renamable) return;
+            if (!photoItem.Renamable) return;
 
-            string newPath = photo.FileDir + Path.DirectorySeparatorChar;
+            string newPath = photoItem.FileDir + Path.DirectorySeparatorChar;
             switch (method)
             {
                 case OrganizeMethod.ByYear:
-                    newPath += $"{photo.GetYear()}";
+                    newPath += $"{photoItem.GetYear()}";
                     break;
 
                 case OrganizeMethod.ByYearMonth:
-                    newPath += $"{photo.GetYear()}-{photo.GetMonth()}";
+                    newPath += $"{photoItem.GetYear()}-{photoItem.GetMonth()}";
                     break;
 
                 case OrganizeMethod.ByMonthInYear:
-                    newPath += $"{photo.GetYear()}{Path.DirectorySeparatorChar}{photo.GetMonth()}";
+                    newPath += $"{photoItem.GetYear()}{Path.DirectorySeparatorChar}{photoItem.GetMonth()}";
                     break;
             }
 
@@ -162,11 +148,11 @@ namespace Shamsi_Photo_Organizer.Utils
 
             if (!Directory.Exists(newPath)) Directory.CreateDirectory(newPath);
 
-            newPath += photo.FileName;
+            newPath += photoItem.FileName;
             try
             {
                 //File.Move(photo.FullPath, newPath);
-                Debug.WriteLine($"error: {newPath}");
+                Debug.WriteLine($"Move: {newPath}");
             }
             catch (Exception e)
             {

@@ -5,14 +5,14 @@ using System.IO;
 
 namespace Shamsi_Photo_Organizer.Model
 {
-    internal class Photo
+    internal class PhotoItem
     {
         public string FullPath { get; }
         public string FileDir { get; }
         public string FileName { get; }
         private string Extension { get; }
 
-        public Photo(string filePath)
+        public PhotoItem(string filePath)
         {
             Debug.WriteLine($"file: {filePath}");
             FullPath = filePath;

@@ -135,4 +135,7 @@
   <data name="Clean" xml:space="preserve">
     <value>❌ پاک کن</value>
   </data>
+  <data name="count_message" xml:space="preserve">
+    <value>تعداد کل عکس ها: {0}\nتعداد عکس های قابل تغییر نام:{1}</value>
+  </data>
 </root>

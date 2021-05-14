@@ -98,7 +98,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\OrganizeMethod.cs" />
-    <Compile Include="Model\Photo.cs" />
+    <Compile Include="Model\PhotoItem.cs" />
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="View\Organizer.xaml.cs">

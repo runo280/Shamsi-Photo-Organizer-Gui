@@ -47,8 +47,8 @@ namespace Shamsi_Photo_Organizer.View
         private void BtnStart_OnClick(object sender, RoutedEventArgs e)
         {
             if (_inputDir == null) return;
-            var allPhotosList = GetAllPhotosList(_inputDir);
-            var countOfValidPhotos = CountOfValidPhotos(allPhotosList);
+            var allPhotosList = GetPhotosList(_inputDir);
+            var countOfValidPhotos = CountOfValidMedia(allPhotosList);
             var message =
                 $"تعداد کل عکسها: {allPhotosList.Count}\n\nتعداد عکس های قابل سازماندهی: {countOfValidPhotos}";
             MessageBoxResult messageBoxResult = MessageBox.Show(message, "شروع سازماندهی", MessageBoxButton.YesNo);

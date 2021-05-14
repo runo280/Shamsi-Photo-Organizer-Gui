@@ -113,5 +113,14 @@ namespace Shamsi_Photo_Organizer.Properties {
                 return ResourceManager.GetString("Clean", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تعداد کل عکس ها: {0}\nتعداد عکس های قابل تغییر نام:{1}.
+        /// </summary>
+        internal static string count_message {
+            get {
+                return ResourceManager.GetString("count_message", resourceCulture);
+            }
+        }
     }
 }
