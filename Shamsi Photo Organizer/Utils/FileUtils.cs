@@ -42,7 +42,7 @@ namespace Shamsi_Photo_Organizer.Utils
 
             try
             {
-                // File.Move(mediaItem.FullPath, newPath);
+                File.Move(photoItem.FullPath, GetNextFileName(newPath));
                 Debug.WriteLine($"Rename: {newPath}");
             }
             catch (Exception e)
@@ -79,7 +79,7 @@ namespace Shamsi_Photo_Organizer.Utils
             newPath += photoItem.FileName;
             try
             {
-                //File.Move(photo.FullPath, newPath);
+                File.Move(photoItem.FullPath, GetNextFileName(newPath));
                 Debug.WriteLine($"Move: {newPath}");
             }
             catch (Exception e)
@@ -87,6 +87,20 @@ namespace Shamsi_Photo_Organizer.Utils
                 //TODO
                 Debug.WriteLine($"error: {e.Message}");
             }
+        }
+        
+        private static string GetNextFileName(string fileName) {
+            string extension = Path.GetExtension(fileName);
+            string pathName = Path.GetDirectoryName(fileName);
+            if (pathName == null) return fileName;
+            string fileNameOnly = Path.Combine(pathName, Path.GetFileNameWithoutExtension(fileName));
+            int i = 0;
+            // If the file exists, keep trying until it doesn't
+            while (File.Exists(fileName)) {
+                i += 1;
+                fileName = $"{fileNameOnly}({i}){extension}";
+            }
+            return fileName;
         }
 
         //TODO add option to delete empty dirs
