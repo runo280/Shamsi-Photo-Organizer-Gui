@@ -54,7 +54,7 @@ namespace Shamsi_Photo_Organizer.View
             var allPhotosList = GetPhotosList(_inputDir);
             var countOfValidPhotos = CountOfValidMedia(allPhotosList);
             var message = $"تعداد کل عکسها: {allPhotosList.Count}\n\nتعداد عکس های قابل تغییر نام: {countOfValidPhotos}";
-            MessageBoxResult messageBoxResult = MessageBox.Show(message, "شروع تغییر نام", MessageBoxButton.YesNo);
+            var messageBoxResult = MessageBox.Show(message, "شروع تغییر نام", MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
                 RenamePhotos(allPhotosList, _prefix);
