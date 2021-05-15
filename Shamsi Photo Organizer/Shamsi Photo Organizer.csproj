@@ -103,6 +103,9 @@
     <Compile Include="Utils\DateUtils.cs" />
     <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="Utils\PhotoUtils.cs" />
+    <Compile Include="View\ConfirmDialog.xaml.cs">
+      <DependentUpon>ConfirmDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Organizer.xaml.cs">
       <DependentUpon>Organizer.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -144,6 +147,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\ConfirmDialog.xaml" />
     <Page Include="View\Organizer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

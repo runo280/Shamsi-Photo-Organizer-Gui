@@ -53,10 +53,10 @@ namespace Shamsi_Photo_Organizer.View
             if (_inputDir == null) return;
             var allPhotosList = PhotoUtils.GetPhotosList(_inputDir);
             var countOfValidPhotos = PhotoUtils.CountOfValidMedia(allPhotosList);
-            var message =
-                $"تعداد کل عکسها: {allPhotosList.Count}\n\nتعداد عکس های قابل تغییر نام: {countOfValidPhotos}";
-            var messageBoxResult = MessageBox.Show(message, "شروع تغییر نام", MessageBoxButton.YesNo);
-            if (messageBoxResult == MessageBoxResult.Yes)
+
+            var confirmDialog = new ConfirmDialog(allPhotosList.Count, countOfValidPhotos) {Owner = GetWindow(this)};
+            if (confirmDialog.ShowDialog() != true) return;
+            if (confirmDialog.IsConfirmed)
             {
                 PhotoUtils.RenamePhotos(allPhotosList, _prefix);
             }
