@@ -4,11 +4,11 @@ namespace Shamsi_Photo_Organizer.View
 {
     public partial class ConfirmDialog
     {
-        public ConfirmDialog(int total, int valid)
+        public ConfirmDialog(string firsMessage, string secondMessage)
         {
             InitializeComponent();
-            LblTotal.Content = $"تعداد کل عکس های یافت شده: {total}";
-            LblValid.Content = $"تعداد کل عکس های قابل تغییر نام: {valid}";
+            LblTotal.Content = firsMessage;
+            LblValid.Content = secondMessage;
         }
 
         private void btnDialogOk_Click(object sender, RoutedEventArgs e)

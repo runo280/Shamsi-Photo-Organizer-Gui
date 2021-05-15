@@ -7,10 +7,10 @@
         WindowStartupLocation="CenterOwner"
         SizeToContent="WidthAndHeight"
         Title="تاییدیه">
-    <Grid Margin="15">
+    <Grid Margin="15" FlowDirection="RightToLeft">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -18,13 +18,11 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Label Name="LblTotal" Grid.Column="1"></Label>
-        <Label Grid.Row="1" Name="LblValid" Grid.Column="1"></Label>
-        
+        <Label Name="LblTotal" Grid.Column="0" />
+        <Label Grid.Row="1" Name="LblValid" Grid.Column="0" />
 
-        <WrapPanel Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" HorizontalAlignment="Right" Margin="0,15,0,0">
-            <Button Click="btnDialogOk_Click" MinWidth="60" Margin="0,0,10,0">تایید</Button>
-            <Button IsDefault="True" IsCancel="True" MinWidth="60">انصراف</Button>
-        </WrapPanel>
+        <Button Grid.Row="2" Grid.Column="0" Click="btnDialogOk_Click" MinWidth="60" Margin="0,0,10,0">تایید</Button>
+        <Button Grid.Row="2" Grid.Column="1" IsDefault="True" IsCancel="True" MinWidth="60">انصراف</Button>
+
     </Grid>
 </Window>

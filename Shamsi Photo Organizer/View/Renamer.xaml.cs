@@ -54,7 +54,9 @@ namespace Shamsi_Photo_Organizer.View
             var allPhotosList = PhotoUtils.GetPhotosList(_inputDir);
             var countOfValidPhotos = PhotoUtils.CountOfValidMedia(allPhotosList);
 
-            var confirmDialog = new ConfirmDialog(allPhotosList.Count, countOfValidPhotos) {Owner = GetWindow(this)};
+            var firstMessage = $"تعداد کل عکسها: {allPhotosList.Count}";
+            var secondMessage = $"تعداد عکسهای قابل تغییر نام: {countOfValidPhotos}";
+            var confirmDialog = new ConfirmDialog(firstMessage, secondMessage) {Owner = GetWindow(this)};
             if (confirmDialog.ShowDialog() != true) return;
             if (confirmDialog.IsConfirmed)
             {

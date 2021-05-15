@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
+using NLog;
 using Shamsi_Photo_Organizer.Model;
 
 namespace Shamsi_Photo_Organizer.Utils
 {
     internal static class FileUtils
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private static readonly String[] SupportedExtensions = {".jpg", ".jpeg"};
 
         public static List<string> GetPhotosListAsString(string dir) =>
@@ -18,37 +17,22 @@ namespace Shamsi_Photo_Organizer.Utils
                 .Where(file => SupportedExtensions.Contains(Path.GetExtension(file)?.ToLowerInvariant()))
                 .ToList();
 
-        // for debug purpose
-        private static void DateToFile(DateTime dateTime, string file)
-        {
-            var sb = new StringBuilder("\n\n======> " + file);
-            sb.AppendLine();
-            sb.AppendLine(dateTime.ToString(CultureInfo.InvariantCulture));
-            sb.AppendLine();
-            File.AppendAllText(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\date_log.txt",
-                sb.ToString());
-        }
-
-
         public static void Rename(PhotoItem photoItem, string prefix)
         {
+            
             if (!photoItem.Renamable) return;
 
             var newPath = photoItem.GetNewPath(prefix);
 
-            Debug.WriteLine($"old_path: {photoItem.FullPath}");
-            Debug.WriteLine($"new_path: {newPath}");
-            Debug.WriteLine("");
-
             try
             {
+                Logger.Debug("Rename::Old:: {file}", photoItem.FullPath);
+                Logger.Debug("Rename::New:: {file}", newPath);
                 File.Move(photoItem.FullPath, GetNextFileName(newPath));
-                Debug.WriteLine($"Rename: {newPath}");
             }
             catch (Exception e)
             {
-                //TODO
-                Debug.WriteLine($"error: {e.Message}");
+                Logger.Error(e, "Rename::");
             }
         }
 
@@ -79,27 +63,30 @@ namespace Shamsi_Photo_Organizer.Utils
             newPath += photoItem.FileName;
             try
             {
+                Logger.Debug("Move::Old:: {file}", photoItem.FullPath);
+                Logger.Debug("Move::New:: {file}", newPath);
                 File.Move(photoItem.FullPath, GetNextFileName(newPath));
-                Debug.WriteLine($"Move: {newPath}");
             }
             catch (Exception e)
             {
-                //TODO
-                Debug.WriteLine($"error: {e.Message}");
+                Logger.Error(e, "Move::");
             }
         }
-        
-        private static string GetNextFileName(string fileName) {
+
+        private static string GetNextFileName(string fileName)
+        {
             string extension = Path.GetExtension(fileName);
             string pathName = Path.GetDirectoryName(fileName);
             if (pathName == null) return fileName;
             string fileNameOnly = Path.Combine(pathName, Path.GetFileNameWithoutExtension(fileName));
             int i = 0;
             // If the file exists, keep trying until it doesn't
-            while (File.Exists(fileName)) {
+            while (File.Exists(fileName))
+            {
                 i += 1;
                 fileName = $"{fileNameOnly}({i}){extension}";
             }
+
             return fileName;
         }
 
