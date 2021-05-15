@@ -19,7 +19,6 @@ namespace Shamsi_Photo_Organizer.Utils
 
         public static void Rename(PhotoItem photoItem, string prefix)
         {
-            
             if (!photoItem.Renamable) return;
 
             var newPath = photoItem.GetNewPath(prefix);
@@ -28,7 +27,14 @@ namespace Shamsi_Photo_Organizer.Utils
             {
                 Logger.Debug("Rename::Old:: {file}", photoItem.FullPath);
                 Logger.Debug("Rename::New:: {file}", newPath);
-                File.Move(photoItem.FullPath, GetNextFileName(newPath));
+
+                string newFile = newPath;
+                if (File.Exists(newPath))
+                {
+                    newFile = GetNextFileName(newPath);
+                }
+
+                File.Move(photoItem.FullPath, newFile);
             }
             catch (Exception e)
             {
@@ -65,7 +71,14 @@ namespace Shamsi_Photo_Organizer.Utils
             {
                 Logger.Debug("Move::Old:: {file}", photoItem.FullPath);
                 Logger.Debug("Move::New:: {file}", newPath);
-                File.Move(photoItem.FullPath, GetNextFileName(newPath));
+
+                string newFile = newPath;
+                if (File.Exists(newPath))
+                {
+                    newFile = GetNextFileName(newPath);
+                }
+
+                File.Move(photoItem.FullPath, newFile);
             }
             catch (Exception e)
             {
